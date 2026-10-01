@@ -52,6 +52,7 @@ def decade_label(year):
             return "недавние"
         case _:
             return "старые"
+        
 # Этап 3
 print('Названия всех фильмов, которые не относятся к жанру "comedy":')
 for movie in movies:
@@ -75,3 +76,18 @@ def count_long_movies(movies, threshold=120):
         if movie['duration_min'] > threshold:
             counter += 1
     return counter
+
+# Этап 4
+def normalize_title(title: str) -> str:
+    words = title.split(' ')
+    new_title = ''
+    for word in words:
+        new_title += word[0].upper() + word[1:] + ' '
+    return new_title[:-1]
+
+def make_slug(title: str) -> str:
+    return title.lower().replace(' ', '-')
+
+def format_report_line(movie: dict) -> str:
+    return (f'"{normalize_title(movie["title"])}" ({movie["year"]}) - {movie["rating"]}/10, ' +
+            f'{duration_in_hours(movie["duration_min"])}, жанры: {", ".join(sorted(movie["genres"]))}')
